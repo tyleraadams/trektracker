@@ -49,15 +49,11 @@ a {
 /* SUBHEAD */
 
 h2 {
-margin: 0;
-padding: 0;
-border: 0;
-font-size: 100%;
-vertical-align: baseline;
--webkit-margin-before: 0.83em;
--webkit-margin-after: 0.83em;
--webkit-margin-start: 0px;
--webkit-margin-end: 0px;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	vertical-align: baseline;
 }
 
 h2 a {
@@ -65,15 +61,27 @@ h2 a {
 }
 
 #channel_name {
-position: absolute;
-bottom: 0;
-font-size: 27px;
-display: block;
-text-indent: 0;
-font-weight: bold;
-text-transform: capitalize;
-font-family: "BWHaasHead",Arial,sans-serif;
+	position: absolute;
+	bottom: 0;
+	font-size: 27px;
+	display: block;
+	text-indent: 0;
+	font-weight: bold;
+	text-transform: capitalize;
+	font-family: "BWHaasHead",Arial,sans-serif;
 }
+
+#channel_name a, .channel #department_name a {
+	text-indent: 0;
+	width: auto;
+	height: auto;
+}
+
+#logo a {
+	display: block;
+}
+
+
 
 /* HELPER STUFF */
 
