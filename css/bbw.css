@@ -9,6 +9,13 @@ body.dark_layout {
 	background: #1a1a1a;
 }
 
+a {
+	text-decoration: none;
+}
+
+/* HEADER LOGO */
+/* this is largely ported from the main businessweek.com css */
+
 #logo {
 	padding: 0;
 	border: 0;
@@ -36,9 +43,39 @@ body.dark_layout {
 }
 
 .dark_layout #logo a#home_link {
-	height: 39px;
-	background-position: 0 -178px;
+	background-position: 0 -184px;
 }
+
+/* SUBHEAD */
+
+h2 {
+margin: 0;
+padding: 0;
+border: 0;
+font-size: 100%;
+vertical-align: baseline;
+-webkit-margin-before: 0.83em;
+-webkit-margin-after: 0.83em;
+-webkit-margin-start: 0px;
+-webkit-margin-end: 0px;
+}
+
+h2 a {
+	color: #f0f;
+}
+
+#channel_name {
+position: absolute;
+bottom: 0;
+font-size: 27px;
+display: block;
+text-indent: 0;
+font-weight: bold;
+text-transform: capitalize;
+font-family: "BWHaasHead",Arial,sans-serif;
+}
+
+/* HELPER STUFF */
 
 .ir {
 	text-indent: -119988px;
@@ -46,8 +83,4 @@ body.dark_layout {
 	text-align: left;
 	direction: ltr;
 	background-repeat: no-repeat;
-}
-
-a {
-	text-decoration: none;
 }
