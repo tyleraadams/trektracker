@@ -1,0 +1,53 @@
+body {
+	background: #ffffff;
+	color: #444444;
+	font-family: sans-serif;
+	line-height: 1.231;
+}
+
+body.dark_layout {
+	background: #1a1a1a;
+}
+
+#logo {
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	display: block;
+	position: relative;
+	float: left;
+	width: 477px;
+	height: 60px;
+	margin: 10px 0;
+}
+
+#logo a {
+	width: 100%;
+	height: inherit;
+	display: block;
+}
+
+#logo a#home_link {
+	width: 427px;
+	height: 33px;
+	background: url(http://static.btrd.net/assets/site-s5d303eb3f3-448dcf1d9671789f047efdb043527a71.png) no-repeat;
+	background-position: 0 -145px;
+}
+
+.dark_layout #logo a#home_link {
+	height: 39px;
+	background-position: 0 -178px;
+}
+
+.ir {
+	text-indent: -119988px;
+	overflow: hidden;
+	text-align: left;
+	direction: ltr;
+	background-repeat: no-repeat;
+}
+
+a {
+	text-decoration: none;
+}
