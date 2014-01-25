@@ -85,8 +85,6 @@ h2 a {
 	display: block;
 }
 
-
-
 /* HELPER STUFF */
 
 .ir {
@@ -95,4 +93,18 @@ h2 a {
 	text-align: left;
 	direction: ltr;
 	background-repeat: no-repeat;
+}
+
+/* SVG */
+
+#svg-canvas {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+
+path, polyline {
+	fill: none;
+	stroke: black;
+	stroke-width: 1;
 }
