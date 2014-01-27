@@ -20,7 +20,7 @@ function drawArrow(parent, from, to, degrees, clockwise) {
 	PARAMETERS:
 		parent: 	the svg container or element to which to append the arrow
 		from: 		the pixel coordinates from which to draw the arrow as an array [x,y], e.g. [100,200]
-		to: 		like from
+		to: 		works just like {from}
 		degrees: 	the angle which the arc of the arrow will subtend. 
 					90 for a gentle arc, 180 for a bigger swoop.
 					beyond 180, it gets gentler again, because of the way SVG computes arc.
@@ -36,18 +36,18 @@ function drawArrow(parent, from, to, degrees, clockwise) {
 				bizweek arrows typically subtend 90 or 180 degrees
 	*/
 	
-	// bound acceptable degrees, between 1 and 359
+	// bound acceptable {degrees}, between 1 and 359
 	degrees = Math.max(degrees, 1);
 	degrees = Math.min(degrees, 359);
 	
-	// get the chord length ("height" h) between points, by pythagorus
+	// get the chord length ("height" {h}) between points, by pythagorus
 	var h = Math.sqrt(Math.pow((to[0]-from[0]),2)+Math.pow((to[1]-from[1]),2));
 	
-	// get the distance at which chord of height h subtends angle degrees
+	// get the distance at which chord of height h subtends {angle} degrees
 	var radians = degrees * Math.PI/180;
 	var d = h / ( 2 * Math.tan(radians/2) );
 	
-	// get the radius r of the circumscribed circle
+	// get the radius {r} of the circumscribed circle
 	var r = Math.sqrt(Math.pow(d,2)+Math.pow((h/2),2));
 	
 	/*
@@ -57,7 +57,7 @@ function drawArrow(parent, from, to, degrees, clockwise) {
 	*/
 	var path = "M " + from[0] + " " + from[1] + " a " + r + " " + r + " 0 0 "+(clockwise ? "1" : "0")+" " + (to[0]-from[0]) + " " + (to[1]-from[1]);
 	
-	// append path to given parent (with class .arrow)
+	// append path to given {parent} (with class .arrow)
 	var arrow = parent.append("path")
 		.attr("d", path)
 		.attr("marker-end", "url(#arrowhead)")
@@ -69,3 +69,6 @@ function drawArrow(parent, from, to, degrees, clockwise) {
 
 // draw sample arrow
 drawArrow(d3.select("#svg-canvas"), [100,200], [300,300], 90, true);
+
+// to-do: path following
+// http://stackoverflow.com/questions/17794501/how-to-animate-an-object-along-a-geojson-path-using-d3-js
