@@ -68,7 +68,11 @@ function drawArrow(parent, from, to, degrees, clockwise) {
 }
 
 // draw sample arrow
-drawArrow(d3.select("#svg-canvas"), [100,200], [300,300], 90, true);
+var mouseArrow = drawArrow(d3.select("#svg-canvas"), [100,200], [300,300], 120, true);
+$(document).on("mousemove", function(e) {
+	mouseArrow.remove();
+	mouseArrow = drawArrow(d3.select("#svg-canvas"), [100,200], [e.pageX,e.pageY], 120, true);
+});
 
 // to-do: path following
 // http://stackoverflow.com/questions/17794501/how-to-animate-an-object-along-a-geojson-path-using-d3-js
