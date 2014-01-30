@@ -13,44 +13,6 @@
 		<link href="favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
 		<link href="apple-touch-icon-precomposed.png" rel="apple-touch-icon" type="image/png" />
 		
-		<!-- * font definitions */ -->
-		<style>
-		  @font-face {
-			font-family: 'BloombergLBold';
-			  src: url("http://www.businessweek.com/assets/type/bloombergl_heavy.eot?#iefix") format('embedded-opentype'),
-				   url('http://www.businessweek.com/assets/type/bloombergl_heavy.ttf') format('truetype');
-			  font-weight: bold;
-			  font-style: normal;
-		  }
-		  @font-face {
-			font-family:'BWHaasHead';
-			src: url('http://www.businessweek.com/assets/type/hinted/haas/bwhaasgroteskhead-95black.eot?#iefix') format('eot'),
-				 url('http://www.businessweek.com/assets/type/hinted/haas/bwhaasgroteskhead-95black.woff') format('woff'),
-				 url('http://www.businessweek.com/assets/type/haas/bwhaasgroteskhead-95black.ttf') format('truetype');
-  
-			font-style: normal;
-			font-weight: 700;
-			font-stretch: normal;
-		  }
-		  @font-face {
-			font-family:'BWHaasHead75Bold';
-			src: url('http://www.businessweek.com/assets/type/hinted/haas75/bwhaasgroteskhead-75bold.eot?#iefix') format('eot'),
-				 url('http://www.businessweek.com/assets/type/hinted/haas75/bwhaasgroteskhead-75bold.woff') format('woff'),
-				 url('http://www.businessweek.com/assets/type/haas75/bwhaasgrotesktext-75bold.ttf') format('truetype');
-			font-style: normal;
-			font-weight: 700;
-			font-stretch: normal;
-		  }
-		  @font-face {
-			font-family:'BWHaasRegular';
-			src: url('http://www.businessweek.com/assets/web_fonts/bwhaasgroteskhead-65medium.eot?#iefix') format('eot'),
-				 url('http://www.businessweek.com/assets/web_fonts/bwhaasgroteskhead-65medium.woff') format('woff'),
-				 url('http://www.businessweek.com/assets/web_fonts/bwhaasgrotesktext-65medium.ttf') format('truetype');
-			font-style: normal;
-			font-weight: 700;
-			font-stretch: normal;
-		  }
-		</style>
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/h5bp.css">
         <link rel="stylesheet" href="css/bbw.css">
@@ -61,21 +23,23 @@
     Body classes:
     .iframed		//no interface wrapping, no margins
     .dark_layout	//like bbw video site
+    
+    Fonts:
+	 font-family:BloombergLBold
+	 font-family:BWHaasHead
+	 font-family:BWHaasHead75Bold
+	 font-family:BWHaasRegular
     -->
     
     <body class="">
-        <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
+		
 		<svg id="svg-canvas">
-		
-		<defs>
-			<!-- arrowhead for arrows -->
-			<marker id = "arrowhead" viewBox = "-10 -10 20 20" refX = "0" refY = "0" markerWidth = "20" markerHeight = "20" stroke-width = "1" orient = "auto">
-				<polyline stroke-linejoin="bevel" points="-6.72,-6.749 0.54,0 -6.72,6.749 "/>
-			</marker>
-		</defs>
-		
+			<defs>
+				<!-- arrowhead for arrows -->
+				<marker id = "arrowhead" viewBox = "-10 -10 20 20" refX = "0" refY = "0" markerWidth = "20" markerHeight = "20" stroke-width = "1" orient = "auto">
+					<polyline stroke-linejoin="bevel" points="-6.72,-6.749 0.54,0 -6.72,6.749 "/>
+				</marker>
+			</defs>
 		</svg>
 
         <div id="logo">
@@ -85,8 +49,15 @@
 			</h2>
 		</div>
 		
+		<div class="clearfix"></div>
 		
-		<!--<iframe width="100%" height="675" frameborder="0" scrolling="no" src="http://www.businessweek.com/graphics/2014_bwg_bitcoin/index.html"></iframe>-->
+		<!----------------------->
+		<!-- Graphic goes here -->
+		<!-- |           /\  / -->
+		<!-- |      /\__/  \/  -->
+		<!-- | \/\_/           -->
+		<!-- |________________ -->
+		<!----------------------->
 		
 		<script src="js/vendor/d3.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
