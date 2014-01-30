@@ -166,7 +166,7 @@ h2 a {
 	height: 100%;
 }
 
-path, polyline {
+path.arrow, polyline.arrow {
 	fill: none;
 	stroke: black;
 	stroke-width: 1;
