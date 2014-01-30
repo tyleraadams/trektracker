@@ -9,6 +9,18 @@ body.dark_layout {
 	background: #1a1a1a;
 }
 
+body.half {
+	width: 315px;
+}
+
+body.full {
+	width: 630px;
+}
+
+body.wide {
+	width: 970px;
+}
+
 a {
 	text-decoration: none;
 }
@@ -121,6 +133,19 @@ h2 a {
 
 #logo a {
 	display: block;
+}
+
+/* OTHER TEMPLATE */
+
+.data-credit {
+	text-transform: uppercase;
+	text-align: right;
+	font-size: 10px;
+	font-family: Helvetica;
+}
+
+.wide .data-credit {
+	text-align: center;
 }
 
 /* HELPER STUFF */

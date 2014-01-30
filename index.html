@@ -21,17 +21,20 @@
     
     <!--
     Body classes:
-    .iframed		//no interface wrapping, no margins
-    .dark_layout	//like bbw video site
+    .iframed		// no interface wrapping, no margins
+    .dark_layout	// like bbw video site
+    .half			// half-width of standard article (315px)
+    .full			// full-width of standard article (630px)
+    .wide			// wide interactive feature layout (970px)
     
     Fonts:
-	 font-family:BloombergLBold
+	 font-family:BloombergLBold		// corporate wordmark logotype
 	 font-family:BWHaasHead
 	 font-family:BWHaasHead75Bold
 	 font-family:BWHaasRegular
     -->
     
-    <body class="">
+    <body class="full">
 		
 		<svg id="svg-canvas">
 			<defs>
@@ -58,6 +61,8 @@
 		<!-- | \/\_/           -->
 		<!-- |________________ -->
 		<!----------------------->
+		
+		<div class="data-credit">Graphic by Bloomberg Businessweek. Data: compiled by Bloomberg</div>
 		
 		<script src="js/vendor/d3.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
