@@ -78,6 +78,7 @@ $(document).on("mousemove", function(e) {
 // NUMBER FORMATTING /////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 
+// adapted from d3.formatPrefix
 function bbwNumberFormat(dolla) {
   var base = Math.max(1, Math.min(1e12, dolla));
   var scaler = bbwFormatPrefix(base);
@@ -104,4 +105,14 @@ function bbw_formatPrefix(d, i) {
 		},
 		symbol: d
 	};
+}
+
+// Convert Excel dates into JS date objects
+// @author https://gist.github.com/christopherscott/2782634
+// @param excelDate {Number}
+// @return {Date}
+function getDateFromExcel(excelDate) {
+  // 1. Subtract number of days between Jan 1, 1900 and Jan 1, 1970, plus 1 (Google "excel leap year bug")             
+  // 2. Convert to milliseconds.
+	return new Date((excelDate - (25567 + 1))*86400*1000);
 }
