@@ -3,6 +3,7 @@
 
 # TEAM
 
+    Bloomberg Businessweek Graphics -- @bizweekgraphics 
     <name> -- <role> -- <twitter>
 
 # THANKS
@@ -11,5 +12,6 @@
 
 # TECHNOLOGY COLOPHON
 
+    d3.js
     HTML5, CSS3
     Normalize.css, jQuery, Modernizr
