@@ -143,6 +143,7 @@ h2 a {
   text-align: right;
   font-size: 10px;
   font-family: Helvetica;
+  margin-top: 50px;
 }
 
 .wide .data-credit {
@@ -161,7 +162,7 @@ h2 a {
 
 /* SVG */
 
-#svg-canvas {
+#svg-canvas.fullscreen {
   position: absolute;
   width: 100%;
   height: 100%;
