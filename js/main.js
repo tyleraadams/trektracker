@@ -1,3 +1,18 @@
+//////////////////////////////////////////////////////////////////////////////////////////
+// DEMO CODE // (remove at will) /////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+
+// draw sample arrow from page element to cursor
+var mouseArrow = drawArrow(d3.select("#svg-canvas"), d3.select("circle"), [300,300], 120, true);
+$(document).on("mousemove", function(e) {
+  mouseArrow.remove();
+  mouseArrow = drawArrow(d3.select("#svg-canvas"), d3.select("circle"), [e.pageX,e.pageY], 120, true);
+});
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// TEMPLATE FUNCTIONS ////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+
 // from http://stackoverflow.com/a/326076/120290
 function inIframe() {
     try {
@@ -18,53 +33,67 @@ $( document ).ready(function() {
 function drawArrow(parent, from, to, degrees, clockwise) {
   /* 
   PARAMETERS:
-    parent:   the svg container or element to which to append the arrow
-    from:     the pixel coordinates from which to draw the arrow as an array [x,y], e.g. [100,200]
-    to:     works just like {from}
-    degrees:   the angle which the arc of the arrow will subtend. 
-          90 for a gentle arc, 180 for a bigger swoop.
-          beyond 180, it gets gentler again, because of the way SVG computes arc.
-          pass 0 or 360 for a straight arrow.
-    clockwise:   boolean determining whether arrow will swoop clockwise (true) or counterclockwise (false)
+    parent:     the svg container or element to which to append the arrow
+    from, to:   where to draw the arrow from and to, in any of four forms (in any mix):
+                  a DOM element:            document.getElementById("hed")
+                  a jQuery element:         $("#hed")
+                  a D3 element:             d3.select("#hed")
+                  a coordinate array [x,y]: [100,200]
+    degrees:    the angle which the arc of the arrow will subtend. 
+                  90 for a gentle arc, 180 for a bigger swoop.
+                  beyond 180, it gets gentler again, because of the way SVG computes arc.
+                  pass 0 or 360 for a straight arrow.
+    clockwise:  boolean determining whether arrow will swoop clockwise (true) or counterclockwise (false)
   */
   
-  if(from instanceof Array) {
-    //
-  } else {
-    
-    function edgesToCorners(element) {
-      var corners = [];
-      ["left","right"].forEach(function(i) { ["top","bottom"].forEach(function(j) { corners.push({"x":i,"y":j}); }); });
-      return corners.map(function(corner) { 
-        return {"x":element.getBoundingClientRect()[corner.x],
-                "y":element.getBoundingClientRect()[corner.y]};
-      });
+  // ZEROTH, figure out which points to draw between, for when from and to are spatially-extended elements
+  
+  // "corners" are coordinates of points that are eligible to be connected
+  function getCorners(element) {
+    if(element instanceof Array && !element.data) {
+      //an array hopefully containing [x,y] was passed in
+      return [{"x":element[0],"y":element[1]}];
+    } else if(element.jquery) {
+      //a jquery element was passed in; convert to DOM element
+      return edgesToCorners(element[0]);
+    } else if(element.nodeType) {
+      //a DOM element was directly passed in
+      return edgesToCorners(element);            
+    } else {
+      //assume it's a D3 element (sloppy, yes)
+      return edgesToCorners(element[0][0]);            
     }
-    
-    var fromCorners = edgesToCorners(from),
-        toCorners = edgesToCorners(to),
-        fromClosest, toClosest, d;
-        
-    fromCorners.forEach(function(fromVal) { 
-      toCorners.forEach(function(toVal) {
-        console.log(distance(fromVal,toVal));
-        if(d==null || distance(fromVal,toVal)<d) {
-          d = distance(fromVal,toVal);
-          fromClosest = fromVal;
-          toClosest = toVal;
-        }
-      });
+  }
+
+  // gets from the sides of a bounding rect (left, right, top, bottom) 
+  //      to its corners (topleft, topright, bottomleft, bottomright)
+  function edgesToCorners(element) {
+    var corners = [];
+    ["left","right"].forEach(function(i) { ["top","bottom"].forEach(function(j) { corners.push({"x":i,"y":j}); }); });
+    return corners.map(function(corner) { 
+      return {"x":element.getBoundingClientRect()[corner.x],
+              "y":element.getBoundingClientRect()[corner.y]};
     });
-    
-    from = [fromClosest.x, fromClosest.y];
-    to = [toClosest.x, toClosest.y];
-    
-    /*
-    from = [from.getBoundingClientRect().left, from.getBoundingClientRect().top];
-    to = [to.getBoundingClientRect().left, to.getBoundingClientRect().top];
-    */
   }
   
+  var fromCorners = getCorners(from), 
+      toCorners = getCorners(to),
+      fromClosest, toClosest, d;
+  
+  // check all possible combinations of eligible endpoints for the shortest distance
+  fromCorners.forEach(function(fromVal) { 
+    toCorners.forEach(function(toVal) {
+      if(d==null || distance(fromVal,toVal)<d) {
+        d = distance(fromVal,toVal);
+        fromClosest = fromVal;
+        toClosest = toVal;
+      }
+    });
+  });
+  
+  from = fromClosest;
+  to = toClosest;
+    
   /* 
   FIRST, compute radius of circle from desired degrees for arc to subtend.
     read up:  http://mathworld.wolfram.com/Chord.html
@@ -78,8 +107,8 @@ function drawArrow(parent, from, to, degrees, clockwise) {
   degrees = Math.min(degrees, 359);
   
   // get the chord length ("height" {h}) between points, by pythagorus
-  var h = Math.sqrt(Math.pow((to[0]-from[0]),2)+Math.pow((to[1]-from[1]),2));
-  
+  var h = Math.sqrt(Math.pow((to.x-from.x),2)+Math.pow((to.y-from.y),2));
+
   // get the distance at which chord of height h subtends {angle} degrees
   var radians = degrees * Math.PI/180;
   var d = h / ( 2 * Math.tan(radians/2) );
@@ -92,7 +121,7 @@ function drawArrow(parent, from, to, degrees, clockwise) {
     read up: http://www.w3.org/TR/SVG/paths.html#PathDataEllipticalArcCommands
     example: <path d = "M 200 50 a 90 90 0 0 1 100 0"/>
   */
-  var path = "M " + from[0] + " " + from[1] + " a " + r + " " + r + " 0 0 "+(clockwise ? "1" : "0")+" " + (to[0]-from[0]) + " " + (to[1]-from[1]);
+  var path = "M " + from.x + " " + from.y + " a " + r + " " + r + " 0 0 "+(clockwise ? "1" : "0")+" " + (to.x-from.x) + " " + (to.y-from.y);
   
   // append path to given {parent} (with class .arrow)
   var arrow = parent.append("path")
@@ -103,25 +132,6 @@ function drawArrow(parent, from, to, degrees, clockwise) {
   // return a reference to the appended arrow
   return arrow;
 }
-
-//drawArrow(d3.select("#svg-canvas"), $(".hed")[0], $("#test")[0], 120, true);
-
-var theta = 0;
-var mouseArrow = drawArrow(d3.select("#svg-canvas"), $("#test")[0], $("#cursor")[0], theta, true);
-$(document).on("mousemove", function(e) {
-  $("#cursor").css("left",e.pageX);
-  $("#cursor").css("top",e.pageY);
-  mouseArrow.remove();
-  mouseArrow = drawArrow(d3.select("#svg-canvas"), $("#test")[0], $("#cursor")[0], theta, true);
-});
-setInterval(function() {theta=(theta+1)%180;},5);
-
-// draw sample arrow
-/*var mouseArrow = drawArrow(d3.select("#svg-canvas"), [100,200], [300,300], 120, true);
-$(document).on("mousemove", function(e) {
-  mouseArrow.remove();
-  mouseArrow = drawArrow(d3.select("#svg-canvas"), [100,200], [e.pageX,e.pageY], 120, true);
-});*/
 
 function distance(from, to) {
   return Math.sqrt(Math.pow(to.x-from.x,2)+Math.pow(to.y-from.y,2));
