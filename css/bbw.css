@@ -138,6 +138,14 @@ h2 a {
 
 /* OTHER TEMPLATE */
 
+.hed {
+  font-family: BWHaasHead;
+}
+
+.dek {
+  font-family: BWHaasRegular;
+}
+
 .data-credit {
   text-transform: uppercase;
   text-align: right;
