@@ -106,13 +106,15 @@ function drawArrow(parent, from, to, degrees, clockwise) {
 
 //drawArrow(d3.select("#svg-canvas"), $(".hed")[0], $("#test")[0], 120, true);
 
-var mouseArrow = drawArrow(d3.select("#svg-canvas"), $("#test")[0], $("#cursor")[0], 120, true);
+var theta = 0;
+var mouseArrow = drawArrow(d3.select("#svg-canvas"), $("#test")[0], $("#cursor")[0], theta, true);
 $(document).on("mousemove", function(e) {
   $("#cursor").css("left",e.pageX);
   $("#cursor").css("top",e.pageY);
   mouseArrow.remove();
-  mouseArrow = drawArrow(d3.select("#svg-canvas"), $("#test")[0], $("#cursor")[0], 120, true);
+  mouseArrow = drawArrow(d3.select("#svg-canvas"), $("#test")[0], $("#cursor")[0], theta, true);
 });
+setInterval(function() {theta=(theta+1)%180;},5);
 
 // draw sample arrow
 /*var mouseArrow = drawArrow(d3.select("#svg-canvas"), [100,200], [300,300], 120, true);
