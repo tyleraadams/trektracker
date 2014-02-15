@@ -32,35 +32,37 @@ function drawArrow(parent, from, to, degrees, clockwise) {
     //
   } else {
     
-    var corners = [
-      { "x": "left",
-        "y": "top" },
-      { "x": "left",
-        "y": "bottom" },
-      { "x": "right",
-        "y": "top" },
-      { "x": "right",
-        "y": "bottom" }];
-    console.log(corners);
+    function edgesToCorners(element) {
+      var corners = [];
+      ["left","right"].forEach(function(i) { ["top","bottom"].forEach(function(j) { corners.push({"x":i,"y":j}); }); });
+      return corners.map(function(corner) { 
+        return {"x":element.getBoundingClientRect()[corner.x],
+                "y":element.getBoundingClientRect()[corner.y]};
+      });
+    }
     
-    var corners2 = ["top","bottom"].map(function(val) { return {"x": "left", "y": val }; });
-    var corners2 = corners2.concat(["top","bottom"].map(function(val) { return {"x": "right", "y": val }; }));
-    console.log(corners2);
-    
-    var corners3 = [];
-    ["left","right"].forEach(function(i) { ["top","bottom"].forEach(function(j) { corners3.push({"x":i,"y":j}); }); });
-    console.log(corners3);
-    
-    /*var fromClosest, toClosest, distance;
-    $.each(from.getBoundingClientRect(), function(fromKey,fromValue) {
-      $.each(to.getBoundingClientRect(), function(toKey,toValue) {
+    var fromCorners = edgesToCorners(from),
+        toCorners = edgesToCorners(to),
+        fromClosest, toClosest, d;
         
+    fromCorners.forEach(function(fromVal) { 
+      toCorners.forEach(function(toVal) {
+        console.log(distance(fromVal,toVal));
+        if(d==null || distance(fromVal,toVal)<d) {
+          d = distance(fromVal,toVal);
+          fromClosest = fromVal;
+          toClosest = toVal;
+        }
       });
     });
     
-    from = [from.getBoundingClientRect().left, from.getBoundingClientRect().top];
-    to = [to.getBoundingClientRect().left, to.getBoundingClientRect().top];*/
+    from = [fromClosest.x, fromClosest.y];
+    to = [toClosest.x, toClosest.y];
     
+    /*
+    from = [from.getBoundingClientRect().left, from.getBoundingClientRect().top];
+    to = [to.getBoundingClientRect().left, to.getBoundingClientRect().top];
+    */
   }
   
   /* 
@@ -102,17 +104,25 @@ function drawArrow(parent, from, to, degrees, clockwise) {
   return arrow;
 }
 
-drawArrow(d3.select("#svg-canvas"), $(".hed")[0], $("#test")[0], 120, true);
+//drawArrow(d3.select("#svg-canvas"), $(".hed")[0], $("#test")[0], 120, true);
+
+var mouseArrow = drawArrow(d3.select("#svg-canvas"), $("#test")[0], $("#cursor")[0], 120, true);
+$(document).on("mousemove", function(e) {
+  $("#cursor").css("left",e.pageX);
+  $("#cursor").css("top",e.pageY);
+  mouseArrow.remove();
+  mouseArrow = drawArrow(d3.select("#svg-canvas"), $("#test")[0], $("#cursor")[0], 120, true);
+});
 
 // draw sample arrow
-var mouseArrow = drawArrow(d3.select("#svg-canvas"), [100,200], [300,300], 120, true);
+/*var mouseArrow = drawArrow(d3.select("#svg-canvas"), [100,200], [300,300], 120, true);
 $(document).on("mousemove", function(e) {
   mouseArrow.remove();
   mouseArrow = drawArrow(d3.select("#svg-canvas"), [100,200], [e.pageX,e.pageY], 120, true);
-});
+});*/
 
 function distance(from, to) {
-  return Math.sqrt(Math.pow(to[0]-from[0],2)+Math.pow(to[1]-from[1],2));
+  return Math.sqrt(Math.pow(to.x-from.x,2)+Math.pow(to.y-from.y,2));
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
