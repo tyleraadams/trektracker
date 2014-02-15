@@ -28,6 +28,36 @@ function drawArrow(parent, from, to, degrees, clockwise) {
     clockwise:   boolean determining whether arrow will swoop clockwise (true) or counterclockwise (false)
   */
   
+  if(from instanceof Array) {
+    //
+  } else {
+    
+    /*var corners = [
+      { "name": "topleft",
+        "x": "left",
+        "y": "top" },
+      { "name": "topright",
+        "x": "left",
+        "y": "top" },
+      { "name": "bottomleft",
+        "x": "bottom",
+        "y": "left" },
+      { "name": "bottomright",
+        "x": "bottom",
+        "y": "right" }];
+            
+    var fromClosest, toClosest, distance;
+    $.each(from.getBoundingClientRect(), function(fromKey,fromValue) {
+      $.each(to.getBoundingClientRect(), function(toKey,toValue) {
+        
+      });
+    });*/
+    
+    from = [from.getBoundingClientRect().left, from.getBoundingClientRect().top];
+    to = [to.getBoundingClientRect().left, to.getBoundingClientRect().top];
+    
+  }
+  
   /* 
   FIRST, compute radius of circle from desired degrees for arc to subtend.
     read up:  http://mathworld.wolfram.com/Chord.html
@@ -66,6 +96,8 @@ function drawArrow(parent, from, to, degrees, clockwise) {
   // return a reference to the appended arrow
   return arrow;
 }
+
+drawArrow(d3.select("#svg-canvas"), $(".hed")[0], $("#test")[0], 120, true);
 
 // draw sample arrow
 var mouseArrow = drawArrow(d3.select("#svg-canvas"), [100,200], [300,300], 120, true);
