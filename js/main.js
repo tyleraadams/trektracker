@@ -32,29 +32,34 @@ function drawArrow(parent, from, to, degrees, clockwise) {
     //
   } else {
     
-    /*var corners = [
-      { "name": "topleft",
-        "x": "left",
+    var corners = [
+      { "x": "left",
         "y": "top" },
-      { "name": "topright",
-        "x": "left",
+      { "x": "left",
+        "y": "bottom" },
+      { "x": "right",
         "y": "top" },
-      { "name": "bottomleft",
-        "x": "bottom",
-        "y": "left" },
-      { "name": "bottomright",
-        "x": "bottom",
-        "y": "right" }];
-            
-    var fromClosest, toClosest, distance;
+      { "x": "right",
+        "y": "bottom" }];
+    console.log(corners);
+    
+    var corners2 = ["top","bottom"].map(function(val) { return {"x": "left", "y": val }; });
+    var corners2 = corners2.concat(["top","bottom"].map(function(val) { return {"x": "right", "y": val }; }));
+    console.log(corners2);
+    
+    var corners3 = [];
+    ["left","right"].forEach(function(i) { ["top","bottom"].forEach(function(j) { corners3.push({"x":i,"y":j}); }); });
+    console.log(corners3);
+    
+    /*var fromClosest, toClosest, distance;
     $.each(from.getBoundingClientRect(), function(fromKey,fromValue) {
       $.each(to.getBoundingClientRect(), function(toKey,toValue) {
         
       });
-    });*/
+    });
     
     from = [from.getBoundingClientRect().left, from.getBoundingClientRect().top];
-    to = [to.getBoundingClientRect().left, to.getBoundingClientRect().top];
+    to = [to.getBoundingClientRect().left, to.getBoundingClientRect().top];*/
     
   }
   
@@ -105,6 +110,10 @@ $(document).on("mousemove", function(e) {
   mouseArrow.remove();
   mouseArrow = drawArrow(d3.select("#svg-canvas"), [100,200], [e.pageX,e.pageY], 120, true);
 });
+
+function distance(from, to) {
+  return Math.sqrt(Math.pow(to[0]-from[0],2)+Math.pow(to[1]-from[1],2));
+}
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // NUMBER FORMATTING /////////////////////////////////////////////////////////////////////
