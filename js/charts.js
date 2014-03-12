@@ -120,10 +120,10 @@ function barChart() {
       height = 600,
       xValue = function(d) { return d[0]; },
       yValue = function(d) { return d[1]; },
-      xScale = d3.scale.ordinal().rangeRoundBands([0, width-margin.left-margin.right], .1),
-      yScale = d3.scale.linear().range([height-margin.top-margin.bottom, 0]),
+      xScale = d3.scale.ordinal(),
+      yScale = d3.scale.linear(),
       xAxis = d3.svg.axis().scale(xScale).orient("bottom"),
-      yAxis = d3.svg.axis().scale(yScale).orient("right").tickSize(-(width-margin.left-margin.right),0).ticks(5);
+      yAxis = d3.svg.axis().scale(yScale).orient("right").tickFormat(bbwNumberFormat).ticks(5);
 
   function chart(selection) {
     selection.each(function(data) {
@@ -135,7 +135,9 @@ function barChart() {
       });
 
       // Update the x-scale.
-      xScale.domain(chart.data.map(function(d) { return d[0]; }));
+      xScale
+        .domain(chart.data.map(function(d) { return d[0]; }))
+        .rangeRoundBands([0, width-margin.left-margin.right], .1);
 
       // Update the y-scale.
       if(!yScale.domain.overridden) yScale.domain([0, d3.max(chart.data, function(d) { return d[1]; })])
@@ -179,6 +181,7 @@ function barChart() {
           .call(xAxis);
 
       // Update the y-axis.
+      yAxis.tickSize(-(width-margin.left-margin.right),0);
       g.select(".y.axis")
           .attr("transform", "translate(" + (width-margin.left-margin.right) + ",0)")
           .call(yAxis);

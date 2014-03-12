@@ -73,11 +73,13 @@ font-family:BWHaasRegular
 
   var barChart = barChart()
       .x(function(d) { return d.year; })
-      .y(function(d) { return +d.value; });
+      .y(function(d) { return +d.value; })
+      .width($("body").width())
+      .height(500);
   d3.tsv("data/totalspills.tsv", function(data) {
     d3.select("#barchart").datum(data).call(barChart);
     d3.select("#bar-zoom").on("click",function() {
-        barChart.yDomain([0,2e6]);
+        barChart.yDomain([0,2e7]);
         d3.select("#barchart")
             .datum(data)
             .transition().duration(1000)
@@ -96,7 +98,8 @@ font-family:BWHaasRegular
 
   var spxChart = timeSeriesChart()
       .x(function(d) { return formatDate.parse(d.date); })
-      .y(function(d) { return +d.price; });
+      .y(function(d) { return +d.price; })
+      .width($("body").width());
 
   var formatDate = d3.time.format("%b %Y");
 
