@@ -1,0 +1,25 @@
+.time-series-chart .line {
+  fill: none;
+  stroke: #000;
+  stroke-width: 1.5;
+}
+.time-series-chart .area {
+  fill: #ccc;
+}
+
+.bar-chart {
+
+}
+
+.bar-chart .axis line, .bar-chart .axis path {
+  fill: none;
+  stroke: none;
+}
+
+.bar-chart .y.axis .tick line {
+  stroke: #eee;
+}
+
+.bar-chart .y.axis {
+  font-size: 10pt;
+}

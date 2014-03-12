@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href="favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+  <link href="apple-touch-icon-precomposed.png" rel="apple-touch-icon" type="image/png" />
+
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/h5bp.css">
+  <link rel="stylesheet" href="css/bbw.css">
+  <link rel="stylesheet" href="css/charts.css">
+  <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+</head>
+
+<!--
+Body classes:
+.iframed    // no interface wrapping, no margins
+.dark_layout  // like bbw video site
+.half      // half-width of standard article (315px)
+.full      // full-width of standard article (630px)
+.wide      // wide interactive feature layout (970px)
+
+Fonts:
+font-family:BloombergLBold    // corporate wordmark logotype
+font-family:BWHaasHead
+font-family:BWHaasHead75Bold
+font-family:BWHaasRegular
+-->
+
+<body class="full">
+
+  <div id="logo">
+    <a href="http://www.businessweek.com/" class="ir" id="home_link">Bloomberg Businessweek</a>
+    <h2 id="channel_name">
+      <a href="http://www.twitter.com/bizweekgraphics">Graphics</a>
+    </h2>
+  </div>
+
+  <div class="clearfix"></div>
+
+  <h3 class="hed">Graphic title</h3>
+  <p class="dek">This is dek, different from the dek you are at now. I am typing the sound of my dek and I repeating and repeating the dek dek dek TK sound of my speaking voice.</p>
+
+  <!-- TIME SERIES DEMOS -->
+  <button id="time-series-zoom">Change timeSeriesChart domain</button>
+  <button id="time-series-auto">Reset timeSeriesChart domain</button>
+  <p id="example"></p>
+
+  <!-- BAR CHART DEMO -->
+  <button id="bar-zoom">Zoom barChart domain</button>
+  <button id="bar-auto">Reset barChart domain</button>
+  <p id="barchart"></p>
+
+  <div class="data-credit">Graphic by Bloomberg Businessweek. Data: compiled by Bloomberg</div>
+
+  <script src="js/vendor/d3.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
+  <script src="js/plugins.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/charts.js"></script>
+
+  <script>
+  /// BAR CHART DEMO
+
+  var barChart = barChart()
+      .x(function(d) { return d.year; })
+      .y(function(d) { return +d.value; });
+  d3.tsv("data/totalspills.tsv", function(data) {
+    d3.select("#barchart").datum(data).call(barChart);
+    d3.select("#bar-zoom").on("click",function() {
+        barChart.yDomain([0,2e6]);
+        d3.select("#barchart")
+            .datum(data)
+            .transition().duration(1000)
+            .call(barChart);
+    });
+    d3.select("#bar-auto").on("click",function() {
+        barChart.yDomain("auto");
+        d3.select("#barchart")
+            .datum(data)
+            .transition().duration(1000)
+            .call(barChart);
+    });
+  })
+
+  /// TIME SERIES CHART DEMO
+
+  var spxChart = timeSeriesChart()
+      .x(function(d) { return formatDate.parse(d.date); })
+      .y(function(d) { return +d.price; });
+
+  var formatDate = d3.time.format("%b %Y");
+
+  d3.csv("data/sp500.csv", function(data) {
+    d3.select("#example")
+        .datum(data)
+        .call(spxChart);
+    d3.select("#time-series-zoom").on("click",function() {
+        spxChart.xDomain([new Date("2000"), new Date("2005")]);
+        d3.select("#example")
+            .datum(data)
+            .call(spxChart);
+    });
+    d3.select("#time-series-auto").on("click",function() {
+        spxChart.xDomain("auto");
+        d3.select("#example")
+            .datum(data)
+            .call(spxChart);
+    });
+  });
+  </script>
+
+</body>
+</html>
