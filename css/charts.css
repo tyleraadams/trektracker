@@ -23,3 +23,7 @@
 .bar-chart .y.axis {
   font-size: 10pt;
 }
+
+.bar-chart .annotation {
+  text-anchor: middle;
+}

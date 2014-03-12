@@ -131,7 +131,7 @@ function barChart() {
       // Convert data to standard representation greedily;
       // this is needed for nondeterministic accessors.
       chart.data = data.map(function(d, i) {
-        return [xValue.call(data, d, i), yValue.call(data, d, i)];
+        return [xValue.call(data, d, i), yValue.call(data, d, i), d.annotation];
       });
 
       // Update the x-scale.
@@ -160,11 +160,18 @@ function barChart() {
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
       // Create skeleton bars
-      g.selectAll(".bar")
+      var barEnter = g.selectAll(".bar")
           .data(chart.data)
         .enter().append("g")
           .attr("class", "bar")
-          .append("rect");
+          .attr("data-x", function(d,i) { return d[0]; })
+          .attr("data-y", function(d,i) { return d[1]; })
+          .attr("data-annotation", function(d,i) { return d[2]; });
+      barEnter.append("rect");
+      barEnter.select(function(d,i) { return d[2] ? this : null })
+        .append("text")
+          .attr("class", "annotation")
+          .text(function(d,i) { return d[2]; });
 
       // Update bars
       var bars = g.selectAll(".bar")
@@ -233,10 +240,8 @@ function barChart() {
     if (!arguments.length) return yScale.domain();
     if (_ == "auto") {
       yScale.domain([0, d3.max(chart.data, function(d) { return d[1]; })]);
-      console.log(yScale.domain());
       return chart;
     }
-    //console.log(yScale.domain());
     yScale.domain(_);
     yScale.domain.overridden = true;
     return chart;
