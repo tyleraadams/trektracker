@@ -82,6 +82,7 @@ font-family:BWHaasRegular
       .attr("transform", "rotate(-20)")
       .attr("dx","-30")
       .attr("dy","-10");
+    drawArrow(d3.select('.chart.bar [data-x="2010"]'), [-5,40], [-50,10], 90, true);
 
     d3.select("#bar-zoom").on("click",function() {
         barChart.yDomain([0,2e7]);
@@ -91,7 +92,6 @@ font-family:BWHaasRegular
             .call(barChart);
     });
     d3.select("#bar-auto").on("click",function() {
-        drawArrow(d3.select(".chart.bar"), d3.select('[data-x="2005"] rect'), [0,0], 30, true);
         barChart.yDomain("auto");
         d3.select("#barchart")
             .datum(data)
