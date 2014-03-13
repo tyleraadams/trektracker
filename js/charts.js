@@ -32,7 +32,11 @@ function timeSeriesChart() {
       var svg = d3.select(this).selectAll("svg").data([chart.data]);
 
       // Otherwise, create the skeletal chart.
-      var gEnter = svg.enter().append("svg").append("g").attr("class","time-series-chart");
+      var gEnter = svg.enter()
+        .append("svg")
+          .attr("class", "chart time-series")
+        .append("g")
+          .attr("class", "inner");
       gEnter.append("path").attr("class", "area");
       gEnter.append("path").attr("class", "line");
       gEnter.append("g").attr("class", "x axis");
@@ -147,7 +151,11 @@ function barChart() {
       var svg = d3.select(this).selectAll("svg").data([chart.data]);
 
       // Otherwise, create the skeletal chart.
-      var gEnter = svg.enter().append("svg").append("g").attr("class","bar-chart");
+      var gEnter = svg.enter()
+        .append("svg")
+          .attr("class", "chart bar")
+        .append("g")
+          .attr("class", "inner");
       gEnter.append("g").attr("class", "x axis");
       gEnter.append("g").attr("class", "y axis");
 
@@ -156,7 +164,7 @@ function barChart() {
           .attr("height", height);
 
       // Update the inner dimensions.
-      var g = svg.select("g.bar-chart")
+      var g = svg.select("g.inner")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
       // Create skeleton bars

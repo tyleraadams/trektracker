@@ -1,29 +1,29 @@
-.time-series-chart .line {
+.chart.time-series .line {
   fill: none;
   stroke: #000;
   stroke-width: 1.5;
 }
-.time-series-chart .area {
+.chart.time-series .area {
   fill: #ccc;
 }
 
-.bar-chart {
+.chart.bar {
 
 }
 
-.bar-chart .axis line, .bar-chart .axis path {
+.chart.bar .axis line, .chart.bar .axis path {
   fill: none;
   stroke: none;
 }
 
-.bar-chart .y.axis .tick line {
+.chart.bar .y.axis .tick line {
   stroke: #eee;
 }
 
-.bar-chart .y.axis {
+.chart.bar .y.axis {
   font-size: 10pt;
 }
 
-.bar-chart .annotation {
+.chart.bar .annotation {
   text-anchor: middle;
 }
